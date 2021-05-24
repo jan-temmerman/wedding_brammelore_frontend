@@ -201,7 +201,7 @@ function FormModal(props) {
           <input
             type="number"
             min={0}
-            max={5}
+            max={2}
             value={personAmount}
             onChange={(e) => setPersonAmount(parseInt(e.target.value))}
           />

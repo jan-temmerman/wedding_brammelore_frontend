@@ -1,6 +1,10 @@
-html, body
+body
   margin: 0
-  overflow: hidden
+  overflow-x: hidden
+  overflow-y: hidden
+
+::-webkit-scrollbar
+  width: 0
 
 .App
   overflow: hidden
@@ -163,7 +167,7 @@ html, body
     transition: opacity 0.5s ease-in-out
     .form-container
       border: 1px white solid
-      width: 250px
+      width: 300px
       padding: 20px
       margin-top: 120px
       backdrop-filter: blur(2px)
@@ -184,7 +188,7 @@ html, body
           border-radius: 2px
           padding: 0 4px
 
-      p:not(:first-child)
+      //p:not(:first-child)
         margin-top: 10px
       .input-container
         display: flex
@@ -194,7 +198,7 @@ html, body
         align-self: center
         border-radius: 2px
         border: 3px solid white
-        margin: 0 0 6px 0
+        margin: 0 0 12px 0
         input
           align-self: center
           text-align: left
@@ -221,6 +225,7 @@ html, body
   .checkboxes-container
     background-color: white
     padding: 10px
+    margin: 0 0 12px 0
     border-radius: 2px
 
     .checkbox-container:first-child
@@ -235,6 +240,11 @@ html, body
         text-align: left
         font-size: 14px
         font-family: 'Montserrat', sans-serif
+        margin-left: 6px
+        margin-bottom: 10px
+        p
+          color: #2B2B2B
+          padding: 0
       input:before
         background-color: white
         border: none
@@ -297,7 +307,7 @@ html, body
     border-radius: 4px
     border: none
     padding: 0
-    olor: #2B2B2B
+    color: #2B2B2B
     font-size: 14px
     font-family: 'Montserrat', sans-serif
   .submit-button:focus
@@ -375,8 +385,8 @@ html, body
   40%, 60%
     transform: translate3d(4px, 0, 0)
 
-$breakpoint-big: 1300px;
-$breakpoint-medium: 750px;
+$breakpoint-big: 1300px
+$breakpoint-medium: 750px
 
 @media (max-width: $breakpoint-big)
   .App
@@ -398,7 +408,7 @@ $breakpoint-medium: 750px;
         height: 70px
     .left_half-container
       height: 100vh
-      width: 0%
+      width: 0
       .date
         display: none
       .rsvp-container
@@ -416,10 +426,13 @@ $breakpoint-medium: 750px;
         backdrop-filter: blur(6px)
         margin-bottom: 10px
 
-    .form-container
-      margin-top: 100px !important
-    .submit-button
-      margin-bottom: 16px
+    .form-modal
+      .form-container
+        box-sizing: border-box
+        margin-top: 100px !important
+        width: 90%
+        .submit-button
+          margin-bottom: 16px
 
     .background
       width: 50%

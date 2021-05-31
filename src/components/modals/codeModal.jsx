@@ -27,6 +27,7 @@ function CodeModal(props) {
           props.renderFestivities(res.data.festivities);
           props.nextModal();
           inputContainer.classList.remove('wrong');
+          document.getElementsByTagName('body')[0].style['overflow-y'] = 'auto';
         } else {
           inputContainer.classList.add('wrong');
           inputContainer.classList.add('wrong-animation');

@@ -18,9 +18,8 @@ function FormModal(props) {
   const [emailWarning, setEmailWarning] = useState(<></>);
 
   useEffect(() => {
-    if (personAmount > 5) setPersonAmount(5);
+    if (personAmount > 2) setPersonAmount(2);
     else if (personAmount < 0) setPersonAmount(0);
-    return;
   }, [personAmount]);
 
   const handleEnter = (e) => {
@@ -34,9 +33,8 @@ function FormModal(props) {
 
   const isImpossible = () => {
     if (!isNaN(personAmount)) {
-      if (personAmount > 0 && !props.receptionIsGoing && !props.dinerIsGoing && !props.partyIsGoing) return true;
-      else if (personAmount === 0 && (props.receptionIsGoing || props.dinerIsGoing || props.partyIsGoing)) return true;
-      else return false;
+      if (personAmount > 0 && props.acceptedEvents.length === 0) return true;
+      else return personAmount === 0 && props.acceptedEvents.length > 0;
     } else return true;
   };
 
@@ -77,18 +75,8 @@ function FormModal(props) {
         body: JSON.stringify({
           name: firstname,
           surname: lastname,
-          reception: {
-            isGoing: props.receptionIsGoing,
-            attendees: personAmount,
-          },
-          diner: {
-            isGoing: props.dinerIsGoing,
-            attendees: personAmount,
-          },
-          party: {
-            isGoing: props.partyIsGoing,
-            attendees: personAmount,
-          },
+          acceptedEvents: props.acceptedEvents,
+          attendees: personAmount,
           email: email,
         }),
       })
@@ -131,12 +119,12 @@ function FormModal(props) {
           setAmountWarning(<em className="wrong-text">Geef in met hoeveel personen je komt</em>);
           setFestivitiesWarning(<></>);
           document.getElementById('checkboxes-container').classList.remove('wrong');
-        } else if (personAmount > 0 && !props.receptionIsGoing && !props.dinerIsGoing && !props.partyIsGoing) {
+        } else if (personAmount > 0 && props.acceptedEvents.length === 0) {
           document.getElementById('checkboxes-container').classList.add('wrong');
           setFestivitiesWarning(<em className="wrong-text">Geen aanwezigheid aangeduid</em>);
           setAmountWarning(<></>);
           document.getElementById('amount-input').classList.remove('wrong');
-        } else if (personAmount === 0 && (props.receptionIsGoing || props.dinerIsGoing || props.partyIsGoing)) {
+        } else if (personAmount === 0 && props.acceptedEvents.length > 0) {
           document.getElementById('amount-input').classList.add('wrong');
           setAmountWarning(<em className="wrong-text">Geef in met hoeveel personen je komt</em>);
           setFestivitiesWarning(<></>);
@@ -240,9 +228,7 @@ function FormModal(props) {
 FormModal.propTypes = {
   showFinishModal: PropTypes.func,
   festivitiesCheckboxes: PropTypes.array,
-  partyIsGoing: PropTypes.bool,
-  dinerIsGoing: PropTypes.bool,
-  receptionIsGoing: PropTypes.bool,
+  acceptedEvents: PropTypes.array,
 };
 
 //FormModal.defaultProps = {

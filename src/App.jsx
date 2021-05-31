@@ -9,9 +9,7 @@ import LeftHalfBG from './components/leftHalfBG';
 import MobileHeader from './components/mobileHeader';
 
 function App() {
-  const [receptionIsGoing, setReceptionIsGoing] = useState(false);
-  const [dinerIsGoing, setDinerIsGoing] = useState(false);
-  const [partyIsGoing, setPartyIsGoing] = useState(false);
+  const [acceptedEvents, setAcceptedEvents] = useState([]);
   //const [emailField, setEmailField] = useState(<></>);
   const [festivitiesCheckboxes, setFestivitiesCheckboxes] = useState([]);
   const [checkmark, setCheckmark] = useState(<></>);
@@ -27,17 +25,23 @@ function App() {
   }, []);
 
   const renderFestivities = (festivities) => {
-    const toRender = festivities.map((festivity) => {
+    const toRender = festivities.map((festivity, index) => {
       return (
-        <div className="checkbox-container" key={festivity}>
+        <div className="checkbox-container" key={index}>
           <input
             type="checkbox"
-            id={festivity}
-            name={festivity}
-            value={festivity}
+            id={index}
+            name={festivity.name}
+            value={festivity.name}
             onChange={(e) => handleFestivityCheckbox(festivity, e.target.checked)}
           />
-          <label htmlFor={festivity}>{festivity[0].toUpperCase() + festivity.slice(1)}</label>
+          <label htmlFor={festivity.name}>
+            <p className="label">{festivity.name},</p>
+            <p className="label">
+              {festivity.start}-{festivity.end},
+            </p>
+            <p className="label">{festivity.address}</p>
+          </label>
         </div>
       );
     });
@@ -46,16 +50,14 @@ function App() {
 
   const handleFestivityCheckbox = (festivity, isChecked) => {
     console.log(festivity, isChecked);
-    switch (festivity) {
-      case 'receptie':
-        setReceptionIsGoing(isChecked);
-        break;
-      case 'eten':
-        setDinerIsGoing(isChecked);
-        break;
-      case 'avondfeest':
-        setPartyIsGoing(isChecked);
-        break;
+    if (isChecked) {
+      console.log([...acceptedEvents, festivity.id]);
+      setAcceptedEvents([1, 3, 6]);
+      console.log(acceptedEvents);
+    } else {
+      const index = acceptedEvents.indexOf(festivity.id);
+      setAcceptedEvents(acceptedEvents.splice(index, 1));
+      console.log(acceptedEvents);
     }
   };
 
@@ -86,9 +88,7 @@ function App() {
       <FormModal
         showFinishModal={showFinishModal}
         festivitiesCheckboxes={festivitiesCheckboxes}
-        partyIsGoing={partyIsGoing}
-        dinerIsGoing={dinerIsGoing}
-        receptionIsGoing={receptionIsGoing}
+        acceptedEvents={acceptedEvents}
       />
 
       <FinishModal checkmark={checkmark} />

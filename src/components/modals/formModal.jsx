@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import '../../App.sass';
 
 function FormModal(props) {
+  const [acceptedEvents, setAcceptedEvents] = useState([]);
+  const [festivitiesCheckboxes, setFestivitiesCheckboxes] = useState([]);
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
@@ -16,6 +18,10 @@ function FormModal(props) {
   const [festivitiesWarning, setFestivitiesWarning] = useState(<></>);
   const [amountWarning, setAmountWarning] = useState(<></>);
   const [emailWarning, setEmailWarning] = useState(<></>);
+
+  useEffect(() => {
+    renderFestivities(props.festivities);
+  }, [props.festivities]);
 
   useEffect(() => {
     if (personAmount > 2) setPersonAmount(2);
@@ -33,8 +39,8 @@ function FormModal(props) {
 
   const isImpossible = () => {
     if (!isNaN(personAmount)) {
-      if (personAmount > 0 && props.acceptedEvents.length === 0) return true;
-      else return personAmount === 0 && props.acceptedEvents.length > 0;
+      if (personAmount > 0 && acceptedEvents.length === 0) return true;
+      else return personAmount === 0 && acceptedEvents.length > 0;
     } else return true;
   };
 
@@ -61,6 +67,44 @@ function FormModal(props) {
     setEmailWarning(<></>);
   };
 
+  const renderFestivities = (festivities) => {
+    const toRender = festivities.map((festivity, index) => {
+      return (
+        <div className="checkbox-container" key={index}>
+          <input
+            type="checkbox"
+            id={index}
+            name={festivity.name}
+            value={festivity.name}
+            onChange={(e) => handleFestivityCheckbox(festivity, e.target.checked)}
+          />
+          <label htmlFor={festivity.name}>
+            <p className="label">{festivity.name},</p>
+            <p className="label">
+              {festivity.start}-{festivity.end},
+            </p>
+            <p className="label">{festivity.address}</p>
+          </label>
+        </div>
+      );
+    });
+    setFestivitiesCheckboxes(toRender);
+  };
+
+  const handleFestivityCheckbox = (festivity, isChecked) => {
+    console.log(festivity, isChecked);
+    if (isChecked) {
+      console.log(acceptedEvents);
+      console.log([...acceptedEvents, festivity.id]);
+      setAcceptedEvents([...acceptedEvents, festivity.id]);
+      console.log(acceptedEvents);
+    } else {
+      const index = acceptedEvents.indexOf(festivity.id);
+      setAcceptedEvents(acceptedEvents.splice(index, 1));
+      console.log(acceptedEvents);
+    }
+  };
+
   const submitForm = () => {
     if (checkForm()) {
       clearAllWarnings();
@@ -75,7 +119,7 @@ function FormModal(props) {
         body: JSON.stringify({
           name: firstname,
           surname: lastname,
-          acceptedEvents: props.acceptedEvents,
+          acceptedEvents: acceptedEvents,
           attendees: personAmount,
           email: email,
         }),
@@ -119,12 +163,12 @@ function FormModal(props) {
           setAmountWarning(<em className="wrong-text">Geef in met hoeveel personen je komt</em>);
           setFestivitiesWarning(<></>);
           document.getElementById('checkboxes-container').classList.remove('wrong');
-        } else if (personAmount > 0 && props.acceptedEvents.length === 0) {
+        } else if (personAmount > 0 && acceptedEvents.length === 0) {
           document.getElementById('checkboxes-container').classList.add('wrong');
           setFestivitiesWarning(<em className="wrong-text">Geen aanwezigheid aangeduid</em>);
           setAmountWarning(<></>);
           document.getElementById('amount-input').classList.remove('wrong');
-        } else if (personAmount === 0 && props.acceptedEvents.length > 0) {
+        } else if (personAmount === 0 && acceptedEvents.length > 0) {
           document.getElementById('amount-input').classList.add('wrong');
           setAmountWarning(<em className="wrong-text">Geef in met hoeveel personen je komt</em>);
           setFestivitiesWarning(<></>);
@@ -180,9 +224,11 @@ function FormModal(props) {
             autoComplete="family-name"
           />
         </div>
-        <p>Aanwezig bij {festivitiesWarning}</p>
+        <p>
+          Aanwezig bij {festivitiesWarning} {acceptedEvents}
+        </p>
         <div className="checkboxes-container" id="checkboxes-container">
-          {props.festivitiesCheckboxes}
+          {festivitiesCheckboxes}
         </div>
         <p>Aantal personen {amountWarning}</p>
         <div className="input-container" id="amount-input">
@@ -227,8 +273,7 @@ function FormModal(props) {
 
 FormModal.propTypes = {
   showFinishModal: PropTypes.func,
-  festivitiesCheckboxes: PropTypes.array,
-  acceptedEvents: PropTypes.array,
+  festivities: PropTypes.array,
 };
 
 //FormModal.defaultProps = {

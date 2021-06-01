@@ -6,7 +6,6 @@ import '../../App.sass';
 
 function FormModal(props) {
   const [acceptedEvents, setAcceptedEvents] = useState([]);
-  const [festivitiesCheckboxes, setFestivitiesCheckboxes] = useState([]);
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
@@ -20,13 +19,13 @@ function FormModal(props) {
   const [emailWarning, setEmailWarning] = useState(<></>);
 
   useEffect(() => {
-    renderFestivities(props.festivities);
-  }, [props.festivities]);
-
-  useEffect(() => {
     if (personAmount > 2) setPersonAmount(2);
     else if (personAmount < 0) setPersonAmount(0);
   }, [personAmount]);
+
+  useEffect(() => {
+    console.log(acceptedEvents);
+  }, [acceptedEvents]);
 
   const handleEnter = (e) => {
     if (e.keyCode === 13) {
@@ -67,41 +66,15 @@ function FormModal(props) {
     setEmailWarning(<></>);
   };
 
-  const renderFestivities = (festivities) => {
-    const toRender = festivities.map((festivity, index) => {
-      return (
-        <div className="checkbox-container" key={index}>
-          <input
-            type="checkbox"
-            id={index}
-            name={festivity.name}
-            value={festivity.name}
-            onChange={(e) => handleFestivityCheckbox(festivity, e.target.checked)}
-          />
-          <label htmlFor={festivity.name}>
-            <p className="label">{festivity.name},</p>
-            <p className="label">
-              {festivity.start}-{festivity.end},
-            </p>
-            <p className="label">{festivity.address}</p>
-          </label>
-        </div>
-      );
-    });
-    setFestivitiesCheckboxes(toRender);
-  };
-
   const handleFestivityCheckbox = (festivity, isChecked) => {
     console.log(festivity, isChecked);
     if (isChecked) {
-      console.log(acceptedEvents);
-      console.log([...acceptedEvents, festivity.id]);
       setAcceptedEvents([...acceptedEvents, festivity.id]);
-      console.log(acceptedEvents);
     } else {
       const index = acceptedEvents.indexOf(festivity.id);
-      setAcceptedEvents(acceptedEvents.splice(index, 1));
-      console.log(acceptedEvents);
+      const newArray = [...acceptedEvents];
+      newArray.splice(index, 1);
+      setAcceptedEvents(newArray);
     }
   };
 
@@ -228,7 +201,26 @@ function FormModal(props) {
           Aanwezig bij {festivitiesWarning} {acceptedEvents}
         </p>
         <div className="checkboxes-container" id="checkboxes-container">
-          {festivitiesCheckboxes}
+          {props.festivities.map((festivity, index) => {
+            return (
+              <div className="checkbox-container" key={index}>
+                <input
+                  type="checkbox"
+                  id={index}
+                  name={festivity.name}
+                  value={festivity.name}
+                  onChange={(e) => handleFestivityCheckbox(festivity, e.target.checked)}
+                />
+                <label htmlFor={festivity.name}>
+                  <p className="label">{festivity.name},</p>
+                  <p className="label">
+                    {festivity.start}-{festivity.end},
+                  </p>
+                  <p className="label">{festivity.address}</p>
+                </label>
+              </div>
+            );
+          })}
         </div>
         <p>Aantal personen {amountWarning}</p>
         <div className="input-container" id="amount-input">

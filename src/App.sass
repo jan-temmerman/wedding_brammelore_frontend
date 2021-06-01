@@ -256,7 +256,7 @@ body
 
   .finish-modal
     pointer-events: none
-    position: fixed
+    position: absolute
     z-index: 2
     top: 0
     left: 0
@@ -265,7 +265,7 @@ body
     padding-top: 100px
     display: flex
     flex-direction: column
-    justify-content: center
+    justify-content: start
     align-items: center
     opacity: 0
     -webkit-transition: opacity 0.5s ease-in-out
@@ -281,6 +281,8 @@ body
       // border: 1px solid white
       border-radius: 4px
       backdrop-filter: blur(2px)
+      a
+        color: white
       p
         color: white
         text-align: center
@@ -401,6 +403,10 @@ $breakpoint-medium: 750px
     overflow: auto
 
   .App
+    .finish-modal
+      div
+        p
+          font-size: 16px
     .names_and-container
       display: none
       p

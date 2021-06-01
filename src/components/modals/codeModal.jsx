@@ -24,7 +24,7 @@ function CodeModal(props) {
         console.log(res);
 
         if (res.data.accepted) {
-          props.renderFestivities(res.data.festivities);
+          props.setFestivities(res.data.festivities);
           props.nextModal();
           inputContainer.classList.remove('wrong');
           document.getElementsByTagName('body')[0].style['overflow-y'] = 'auto';
@@ -73,7 +73,7 @@ function CodeModal(props) {
 
 CodeModal.propTypes = {
   nextModal: PropTypes.func,
-  renderFestivities: PropTypes.func,
+  setFestivities: PropTypes.func,
 };
 
 //CodeModal.defaultProps = {

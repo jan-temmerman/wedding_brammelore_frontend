@@ -9,10 +9,9 @@ import LeftHalfBG from './components/leftHalfBG';
 import MobileHeader from './components/mobileHeader';
 
 function App() {
-  const [acceptedEvents, setAcceptedEvents] = useState([]);
   //const [emailField, setEmailField] = useState(<></>);
-  const [festivitiesCheckboxes, setFestivitiesCheckboxes] = useState([]);
   const [checkmark, setCheckmark] = useState(<></>);
+  const [festivities, setFestivities] = useState([]);
 
   useEffect(() => {
     let vh = window.innerHeight * 0.01;
@@ -24,42 +23,9 @@ function App() {
     });
   }, []);
 
-  const renderFestivities = (festivities) => {
-    const toRender = festivities.map((festivity, index) => {
-      return (
-        <div className="checkbox-container" key={index}>
-          <input
-            type="checkbox"
-            id={index}
-            name={festivity.name}
-            value={festivity.name}
-            onChange={(e) => handleFestivityCheckbox(festivity, e.target.checked)}
-          />
-          <label htmlFor={festivity.name}>
-            <p className="label">{festivity.name},</p>
-            <p className="label">
-              {festivity.start}-{festivity.end},
-            </p>
-            <p className="label">{festivity.address}</p>
-          </label>
-        </div>
-      );
-    });
-    setFestivitiesCheckboxes(toRender);
-  };
-
-  const handleFestivityCheckbox = (festivity, isChecked) => {
-    console.log(festivity, isChecked);
-    if (isChecked) {
-      console.log([...acceptedEvents, festivity.id]);
-      setAcceptedEvents([1, 3, 6]);
-      console.log(acceptedEvents);
-    } else {
-      const index = acceptedEvents.indexOf(festivity.id);
-      setAcceptedEvents(acceptedEvents.splice(index, 1));
-      console.log(acceptedEvents);
-    }
-  };
+  useEffect(() => {
+    console.log(festivities);
+  }, [festivities]);
 
   const showFormModal = () => {
     document.getElementById('left_half').classList.add('fullWidth');
@@ -83,13 +49,9 @@ function App() {
 
   return (
     <div className="App">
-      <CodeModal nextModal={showFormModal} renderFestivities={renderFestivities} />
+      <CodeModal nextModal={showFormModal} setFestivities={setFestivities} />
 
-      <FormModal
-        showFinishModal={showFinishModal}
-        festivitiesCheckboxes={festivitiesCheckboxes}
-        acceptedEvents={acceptedEvents}
-      />
+      <FormModal showFinishModal={showFinishModal} festivities={festivities} />
 
       <FinishModal checkmark={checkmark} />
 

@@ -370,6 +370,21 @@ body
   .wrong-animation
     animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both
 
+  .wedding-hours
+    z-index: -10
+    position: fixed
+    bottom: 20px
+    right: 0
+    width: 50%
+    p
+      font-family: 'Montserrat', sans-serif
+      color: white
+      opacity: 0.8
+      font-weight: lighter
+      font-size: 20px
+      margin: 8px
+      text-align: center
+
   .mobile-header
     display: none
     justify-content: center
@@ -442,6 +457,8 @@ $breakpoint-medium: 750px
     margin: 0
 
   .App
+    .wedding-hours
+      width: 100%
     .errorCard
       width: calc(100% - 80px)
     .finish-modal

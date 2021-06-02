@@ -62,9 +62,15 @@ function App() {
 
       <MobileHeader />
 
+      <div className="background" />
+
+      <div className="wedding-hours">
+        <p>Burgerlijke trouw: 10u, Oud Dorp 2, Schellebelle</p>
+        <p>Kerkelijke trouw: 14u, Dorp 19, Schellebelle</p>
+      </div>
+
       <LeftHalfBG />
 
-      <div className="background" />
       {error !== '' ? (
         <div className="errorCard">
           <p>

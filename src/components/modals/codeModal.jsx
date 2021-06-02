@@ -26,7 +26,7 @@ function CodeModal(props) {
       .then((res) => {
         setTimeout(() => {
           setIsLoading(false);
-        }, 1500);
+        }, 500);
         console.log(res);
 
         if (res.data.accepted) {

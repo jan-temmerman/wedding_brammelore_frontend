@@ -11,6 +11,7 @@ import MobileHeader from './components/mobileHeader';
 function App() {
   //const [emailField, setEmailField] = useState(<></>);
   const [checkmark, setCheckmark] = useState(<></>);
+  const [error, setError] = useState('');
   const [festivities, setFestivities] = useState([]);
 
   useEffect(() => {
@@ -24,8 +25,12 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log(festivities);
-  }, [festivities]);
+    if (error !== '') {
+      setTimeout(() => {
+        setError('');
+      }, 5000);
+    }
+  }, [error]);
 
   const showFormModal = () => {
     document.getElementById('left_half').classList.add('fullWidth');
@@ -49,9 +54,9 @@ function App() {
 
   return (
     <div className="App">
-      <CodeModal nextModal={showFormModal} setFestivities={setFestivities} />
+      <CodeModal nextModal={showFormModal} setFestivities={setFestivities} setError={setError} />
 
-      <FormModal showFinishModal={showFinishModal} festivities={festivities} />
+      <FormModal showFinishModal={showFinishModal} festivities={festivities} setError={setError} />
 
       <FinishModal checkmark={checkmark} />
 
@@ -60,6 +65,16 @@ function App() {
       <LeftHalfBG />
 
       <div className="background" />
+      {error !== '' ? (
+        <div className="errorCard">
+          <p>
+            <h3>ERROR:</h3>
+            {error}
+          </p>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

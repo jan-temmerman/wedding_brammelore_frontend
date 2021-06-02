@@ -5,7 +5,7 @@ import '../App.sass';
 function LeftHalfBG() {
   return (
     <div id="left_half" className="left_half-container">
-      <div>
+      <div className="header">
         <div className="rsvp-container">
           <div className="dot" />
           <p className="title">RSVP</p>

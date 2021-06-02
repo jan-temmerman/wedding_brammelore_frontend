@@ -15,6 +15,34 @@ body
   display: flex
   flex-direction: column
 
+  .errorCard
+    position: fixed
+    z-index: 200
+    right: 20px
+    bottom: 20px
+    background-color: #ff3434
+    padding: 20px
+    width: 20%
+    display: flex
+    flex-direction: row
+    justify-content: flex-start
+    align-items: flex-start
+    h3
+      color: white
+      margin: 0 6px 0 0
+      font-weight: bold
+      font-family: "Montserrat", sans-serif
+      text-align: left
+    p
+      display: flex
+      flex-direction: row
+      justify-content: flex-start
+      align-items: center
+      color: white
+      margin: 0
+      font-family: "Montserrat", sans-serif
+      text-align: left
+
   .names_and-container
     box-sizing: border-box
     width: 100%
@@ -36,6 +64,8 @@ body
       align-content: flex-start
 
   .background
+    position: fixed
+    z-index: -10
     width: 50%
     height: 100%
     background-image: url("./assets/images/bg.jpg")
@@ -60,34 +90,38 @@ body
     flex-direction: column
     justify-content: space-between
     background-color: #B77F3D
-    position: absolute
+    position: fixed
     -webkit-transition: width 1.5s
     -moz-transition: width 1.5s
     -ms-transition: width 1.5s
     -o-transition: width 1.5s
     transition: width 1.5s
-    .date
-      font-family: 'Montserrat', sans-serif
-      color: white
-      font-weight: lighter
-      font-size: 20px
-    .rsvp-container
-      align-self: center
-      height: 20px
-      margin: 30px auto 0 auto
-      width: 200px
-      display: flex
-      justify-content: space-between
-      align-items: center
-      .title
-        color: white
-        font-size: 40px
+    .header
+      z-index: 100
+      z-index: 100
+      .date
         font-family: 'Montserrat', sans-serif
-      .dot
-        width: 4px
-        height: 4px
-        border-radius: 2px
-        background-color: white
+        color: white
+        font-weight: lighter
+        font-size: 20px
+      .rsvp-container
+        align-self: center
+        height: 20px
+        margin: 30px auto 0 auto
+        width: 200px
+        display: flex
+        z-index: 100
+        justify-content: space-between
+        align-items: center
+        .title
+          color: white
+          font-size: 40px
+          font-family: 'Montserrat', sans-serif
+        .dot
+          width: 4px
+          height: 4px
+          border-radius: 2px
+          background-color: white
 
   .code-modal
     position: fixed
@@ -228,8 +262,6 @@ body
     margin: 0 0 12px 0
     border-radius: 2px
 
-    .checkbox-container:first-child
-      margin: 0
     .checkbox-container
       width: 100%
       display: flex
@@ -243,7 +275,8 @@ body
         margin-left: 6px
         margin-bottom: 10px
         p
-          color: #2B2B2B
+          color: #474747
+          font-family: "Montserrat", sans-serif
           padding: 0
       input:before
         background-color: white
@@ -265,7 +298,7 @@ body
     padding-top: 100px
     display: flex
     flex-direction: column
-    justify-content: start
+    justify-content: flex-start
     align-items: center
     opacity: 0
     -webkit-transition: opacity 0.5s ease-in-out
@@ -275,12 +308,13 @@ body
     transition: opacity 0.5s ease-in-out
     div
       display: flex
+      width: 20%
       flex-direction: column
       padding: 20px 40px
       margin-bottom: 100px
-      // border: 1px solid white
+      border: 1px solid white
       border-radius: 4px
-      backdrop-filter: blur(2px)
+      backdrop-filter: blur(10px)
       a
         color: white
       p
@@ -340,10 +374,10 @@ body
     display: none
     justify-content: center
     flex-direction: column
-    position: absolute
+    position: fixed
     margin-left: auto
     margin-right: auto
-    z-index: 10
+    z-index: 100
     left: 0
     right: 0
     top: 0
@@ -392,19 +426,27 @@ $breakpoint-medium: 750px
 
 @media (max-width: $breakpoint-big)
   .App
+    .finish-modal
+      div
+        width: 70%
     .names_and-container
       p
         font-size: 80px
         height: 70px
 
+    .errorCard
+      width: 50%
+
 @media (max-width: $breakpoint-medium)
   html, body
     margin: 0
-    overflow: auto
 
   .App
+    .errorCard
+      width: calc(100% - 80px)
     .finish-modal
       div
+        width: 70%
         p
           font-size: 16px
     .names_and-container

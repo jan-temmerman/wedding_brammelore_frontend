@@ -103,9 +103,13 @@ function FormModal(props) {
           setTimeout(() => {
             setIsLoading(false);
           }, 1500);
-          props.showFinishModal();
+          if (res.success) props.showFinishModal();
+          else props.setError(res.message);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          setIsLoading(false);
+          props.setError(err.message);
+        });
     } else {
       console.log('Form not correct.');
       if (firstname === '') {
@@ -197,9 +201,7 @@ function FormModal(props) {
             autoComplete="family-name"
           />
         </div>
-        <p>
-          Aanwezig bij {festivitiesWarning} {acceptedEvents}
-        </p>
+        <p> Aanwezig bij {festivitiesWarning} </p>
         <div className="checkboxes-container" id="checkboxes-container">
           {props.festivities.map((festivity, index) => {
             return (
@@ -256,7 +258,7 @@ function FormModal(props) {
           */}
       </form>
       <div className="divider" />
-      <button id="submit" className="submit-button" onClick={() => submitForm()}>
+      <button id="submit" className="submit-button" disabled={isLoading} onClick={() => submitForm()}>
         {isLoading ? <PulseLoader color={'#7C5B34'} loading={true} size={6} /> : 'Versturen'}
       </button>
     </div>
@@ -266,6 +268,7 @@ function FormModal(props) {
 FormModal.propTypes = {
   showFinishModal: PropTypes.func,
   festivities: PropTypes.array,
+  setError: PropTypes.func,
 };
 
 //FormModal.defaultProps = {

@@ -9,6 +9,7 @@ function FormModal(props) {
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
   const [personAmount, setPersonAmount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   //const [emailField, setEmailField] = useState(<></>);
@@ -95,6 +96,7 @@ function FormModal(props) {
           acceptedEvents: acceptedEvents,
           attendees: personAmount,
           email: email,
+          message: message,
         }),
       })
         .then((res) => res.json())
@@ -242,6 +244,15 @@ function FormModal(props) {
             autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <p>Bericht</p>
+        <div className="input-container" id="email-input">
+          <input
+            type="text"
+            placeholder="Bericht aan Hannelore en Bram"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
           />
         </div>
         {/*

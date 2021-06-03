@@ -9,7 +9,7 @@ function FinishModal(props) {
       <div>
         {props.checkmark}
         <p>Bedankt voor het antwoorden op je uitnodiging!</p>
-        <p>Dat vuile coronabeest veranderd ons feest.</p>
+        <p>Dat vuile coronabeest verandert ons feest.</p>
         <p>
           We doen het in 3 keer <br />
           en hopen op mooi weer!

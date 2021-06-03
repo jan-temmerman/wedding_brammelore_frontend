@@ -29,7 +29,7 @@ function FinishModal(props) {
           Ookal zou het die dag geweldig kunnen gieten.
         </p>
         <p>
-          Hebt ge nog vragen of weet ge iets niet, contacteer ons dan op <a href="tel:0476706403">0476 70 64 03</a>
+          Hebt ge nog vragen of weet ge iets nie, contacteer ons dan op <a href="tel:0476706403">0476 70 64 03</a>
         </p>
       </div>
     </div>
